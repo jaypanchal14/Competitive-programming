@@ -12,7 +12,7 @@ nums = [5,6,7,1,2,3,4]
 */
 
 void reverse(vector<int>& nums, int start, int end){
-    while(start<=end){
+    while(start<end){
         swap(nums[start++],nums[end--]);
     }
 }
