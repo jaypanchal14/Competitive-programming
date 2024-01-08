@@ -33,65 +33,126 @@ nltk.download('wordnet')
 
 import nltk
 from nltk.corpus import stopwords
-eng_stop_words = set(stopwords.words('english'))
-
-#(1) tokenization with stemming
 from nltk.stem import PorterStemmer
-
-stemmer = PorterStemmer()
-paragraph = "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs."
-
-stem_sentences = nltk.sent_tokenize(paragraph)
-for i in range(len(stem_sentences)):
-    words = nltk.word_tokenize(stem_sentences[i])
-    words = [stemmer.stem(word) for word in words if word not in eng_stop_words]
-    stem_sentences[i] = ' '.join(words)
-print("With stemming:",stem_sentences[0])
-
-#(2) tokenization with lemmetization
 from nltk.stem import WordNetLemmatizer
-
-lemmatizer = WordNetLemmatizer()
-
-lem_sentences = nltk.sent_tokenize(paragraph)
-for i in range(len(lem_sentences)):
-    words = nltk.word_tokenize(lem_sentences[i])
-    words = [lemmatizer.lemmatize(word) for word in words if word not in eng_stop_words]
-    lem_sentences[i] = ' '.join(words)
-
-print("With lemmetization:",lem_sentences[0])
-
-#(3) Bag of Words or Count-vectorization
 import re
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from gensim.models import Word2Vec
 
-bwsentence = nltk.sent_tokenize(paragraph)
 
-corpus = [] #To store processed tokens for each sentence
+eng_stop_words = set(stopwords.words('english'))
+paragraph = "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs."
 
-for i in range(len(bwsentence)):
-    review = re.sub('[^a-zA-Z]',' ',bwsentence[i])
-    review = review.lower()
-    words = review.split()
-    # In case of stemming
-    #words = [stemmer.stem(word) for word in words if word not in eng_stop_words]
-    
-    # In case of lemmetizing
-    words = [lemmatizer.lemmatize(word) for word in words if word not in eng_stop_words]
-    review = ' '.join(words)
-    corpus.append(review)
+#----------------------------------------------------------------------------------------------------------------------------
+#(1) tokenization with stemming
 
-vectorizer = CountVectorizer()
-cv_array = vectorizer.fit_transform(corpus).toarray()
-print("With Bag-of-word:\n", cv_array)
+def get_stem_sentence(paragraph):
+    stemmer = PorterStemmer()
+    stem_sentences = nltk.sent_tokenize(paragraph)
+    for i in range(len(stem_sentences)):
+        words = nltk.word_tokenize(stem_sentences[i])
+        words = [stemmer.stem(word) for word in words if word not in eng_stop_words]
+        stem_sentences[i] = ' '.join(words)
+    return stem_sentences
+#print("With Stemming: ",get_stem_sentence(paragraph)[0])
 
+#----------------------------------------------------------------------------------------------------------------------------
+#(2) tokenization with lemmetization
+
+def get_lem_sentence(paragraph):
+    lemmatizer = WordNetLemmatizer()
+    lem_sentences = nltk.sent_tokenize(paragraph)
+    for i in range(len(lem_sentences)):
+        words = nltk.word_tokenize(lem_sentences[i])
+        words = [lemmatizer.lemmatize(word) for word in words if word not in eng_stop_words]
+        lem_sentences[i] = ' '.join(words)
+    return lem_sentences
+# print("With Lemmetization: ",get_lem_sentence(paragraph)[0])
+
+
+#----------------------------------------------------------------------------------------------------------------------------
+#(3) Bag of Words or Count-vectorization
+
+def get_processed_sentences(paragraph):
+    lemmatizer = WordNetLemmatizer()
+    bwsentence = nltk.sent_tokenize(paragraph)
+
+    #To store processed tokens for each sentence
+    corpus = []
+    for i in range(len(bwsentence)):
+        review = re.sub('[^a-zA-Z]',' ',bwsentence[i])
+        review = review.lower()
+        
+        # Before splitting, we can also call word_tokenize method to get list of words
+        #words = nltk.word_tokenize(review)
+        
+        words = review.split()
+        # In case of stemming
+        #words = [stemmer.stem(word) for word in words if word not in eng_stop_words]
+        
+        # In case of lemmetizing
+        words = [lemmatizer.lemmatize(word) for word in words if word not in eng_stop_words]
+        review = ' '.join(words)
+        corpus.append(review)
+    return corpus
+#print("Tokenized sentences: ",get_processed_sentences(paragraph)[0])
+
+
+def get_bag_of_words(corpus):
+    vectorizer = CountVectorizer()
+    cv_array = vectorizer.fit_transform(corpus).toarray()
+    # print("With Bag-of-word:\n", cv_array)
+    return cv_array
+#corpus = get_processed_sentences(paragraph)
+#print("Bag-Of-Words : \n",get_bag_of_words(corpus))
+
+#----------------------------------------------------------------------------------------------------------------------------
 #(4) TF-IDF : Term Frequency and Inverse document frequency
 # TF : number of repeative words in a sentence / total words
 # IDF : log(total sentences / number of sentences containing any word)
 
 #TF-TDF : TF * IDF
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-tf_idf = TfidfVectorizer()
-tf_array = tf_idf.fit_transform(corpus).toarray()
-print('With TF-IDF \n',tf_array)
+def get_TF_IDF(corpus):
+    tf_idf = TfidfVectorizer()
+    tf_array = tf_idf.fit_transform(corpus).toarray()
+    #print('With TF-IDF \n',tf_array)
+    return tf_array
+#corpus = get_processed_sentences(paragraph)
+#print("TF-IDF : \n",get_TF_IDF(corpus).shape)
+
+#----------------------------------------------------------------------------------------------------------------------------
+#(5)Word2Vec
+# Technique to derive word associations from a given group of sentences.
+def getWord2Ved(paragraph):
+    text = re.sub(r'\[[0-9]*\]',' ',paragraph)
+    text = re.sub(r'\s+',' ',text)
+    text = text.lower()
+    
+    sentences = nltk.sent_tokenize(text)
+    sentences = [nltk.word_tokenize(s) for s in sentences]
+    sentences = [word for words in sentences for word in words if word not in eng_stop_words]
+
+    #min_count : This parameter ignores all words with a total frequency lower than the specified value while training the model
+    model = Word2Vec(sentences, min_count=1)
+    #print(model.cum_table)
+
+#getWord2Ved(paragraph)
+#----------------------------------------------------------------------------------------------------------------------------
+
+#   Project Help
+#from sklearn.naive_bayes import CategoricalNB
+#Naive bayes works very well with the NLP problems, check with it for a test. Try different models based on NB
+#While doing text processing on reviews, select those features, having maximum occurence
+
+#The used classifiers show substantial accuracy in predicting reader satisfaction. Among them, 
+#the random forest classifier combined with the TF-IDF feature representation method exhibited the highest accuracy at 96.09%.
+    
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+
+sent = "You are so negative"
+
+print(sia.polarity_scores(sent))
