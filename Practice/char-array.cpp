@@ -7,7 +7,25 @@
 
 using namespace std;
 
+//To find  : (a^n)%m
+int fastPower(int a, int n, int m){
+    long long ans = a;
+    int i=n;
+    while(i>0){
+        if(n&1){
+            ans *= a;
+        }
+        ans *= ans;
+        ans = ans % m;
+        i = i>>1;
+    }
+    return static_cast<int>(ans)%m;
+}
+
 int main(){
+
+
+    cout<<"2^10 % 7: "<<fastPower(2,10,1000009);
 
     /*char name[30];
     cout<<"Enter a name: ";
@@ -44,10 +62,12 @@ int main(){
     cout<<"String entered is : "<<i<<endl;
     cout<<"Is last two string equal: "<<strcmp(buf,i.c_str())<<endl;
     */
-    char first[20] = "first";
+    
+    /*char first[20] = "first";
     char dest[20];
     strcpy(dest, first);
     cout<<dest;
+    */
 
     return 0;
 }
