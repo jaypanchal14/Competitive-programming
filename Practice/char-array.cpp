@@ -7,17 +7,18 @@
 
 using namespace std;
 
-//To find  : (a^n)%m
+//To find  : (a^n)%m    power exponential
 int fastPower(int a, int n, int m){
-    long long ans = a;
+    long long ans = 1;
     int i=n;
     while(i>0){
-        if(n&1){
+        if(i&1){
             ans *= a;
         }
-        ans *= ans;
-        ans = ans % m;
+        a *= a;
+        a = a % m;
         i = i>>1;
+        cout<<ans<<","<<a<<","<<i<<endl;
     }
     return static_cast<int>(ans)%m;
 }
@@ -25,7 +26,7 @@ int fastPower(int a, int n, int m){
 int main(){
 
 
-    cout<<"2^10 % 7: "<<fastPower(2,10,1000009);
+    cout<<"2^10 % 1e9: "<<fastPower(2,15,1000009);
 
     /*char name[30];
     cout<<"Enter a name: ";
