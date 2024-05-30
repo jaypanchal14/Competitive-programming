@@ -34,7 +34,7 @@ def calculator(operation, x, y):
     
 # pip install "uvicorn[standard]"  -> for server
 # pip install fastapi
-# command to run : uvicorn FastApi:app 
+# command to run : uvicorn api:app 
 # option to pass while running (if you want automatic reloading):  --reload
 
 #curl -X POST -d '{"operation" : "FIB", "x" : 5, "y" : 10}' 'http://127.0.0.1:8000/calculate'
