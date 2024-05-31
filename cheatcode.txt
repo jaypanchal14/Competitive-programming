@@ -1,0 +1,8 @@
+# Bit manipulation
+Runs around the binary representation of the input, 0 or 1.
+White solving such question, consider below key-points :
+- Try using xor operation
+- Try figuring out if mask can help, to distinguish between following pattern or non-following pattern.
+
+# Sliding window
+Window will have a start and end, consider pruning the start variable instead of end to update the window size.
