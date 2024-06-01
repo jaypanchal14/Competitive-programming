@@ -4,5 +4,8 @@ White solving such question, consider below key-points :
 - Try using xor operation
 - Try figuring out if mask can help, to distinguish between following pattern or non-following pattern.
 
+# Linked-list
+- Try to use recusion, consider the prev, current, next possible nodes.
+
 # Sliding window
 Window will have a start and end, consider pruning the start variable instead of end to update the window size.
