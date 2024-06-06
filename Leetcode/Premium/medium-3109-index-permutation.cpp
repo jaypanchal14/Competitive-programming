@@ -5,7 +5,7 @@ using namespace std;
 #define MOD 1000000007
 
 /*
-Description :           PREMIUM
+Description : BIT - Binary Index Tree
 Given an array perm of length n which is a permutation of [1,2,..,n], return the index of perm in the
 lexicographically sorted order of all the permutations of [1,2,..,n].
 Since the answer may be very large, return it modulo 10^9+7.
