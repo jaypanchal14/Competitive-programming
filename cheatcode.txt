@@ -8,4 +8,10 @@ White solving such question, consider below key-points :
 - Try to use recusion, consider the prev, current, next possible nodes.
 
 # Sliding window
-Window will have a start and end, consider pruning the start variable instead of end to update the window size.
+- Window will have a start and end, consider pruning the start variable instead of end to update the window size.
+
+# Subarray count with some condition
+- Using map with prefix-sum might help to get the count, initialize for 0th or empty value first.
+
+# Stack
+- Considering traversing in either direction, recursion might help(stack pop and push with backtracking)
