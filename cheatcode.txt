@@ -4,6 +4,11 @@ White solving such question, consider below key-points :
 - Try using xor operation
 - Try figuring out if mask can help, to distinguish between following pattern or non-following pattern.
 
+# Greedy
+The first think which should come to your mind is, lets grab what is most relevant to the situation.
+Sorting will definitely help. For optimization, you can check if some condition is being held true for some item/user/val,
+whether it will held true for neighbours of left or right side. 
+
 # Linked-list
 - Try to use recusion, consider the prev, current, next possible nodes.
 
@@ -15,3 +20,7 @@ White solving such question, consider below key-points :
 
 # Stack
 - Considering traversing in either direction, recursion might help(stack pop and push with backtracking)
+
+# Tree
+- Try considering the situation of the given question based on different traversal methods.
+- Level-order with queue, vertical-order with column and queue
