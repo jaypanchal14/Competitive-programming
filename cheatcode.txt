@@ -24,3 +24,10 @@ whether it will held true for neighbours of left or right side.
 # Tree
 - Try considering the situation of the given question based on different traversal methods.
 - Level-order with queue, vertical-order with column and queue
+- For space-optimized questions, morris traversal might help
+- In case of problem around Binary-search tree, try using login incorporated with in-order traversal.
+
+https://leetcode.com/problems/maximum-binary-tree/description/
+https://leetcode.com/problems/maximum-binary-tree-ii/description/
+https://leetcode.com/problems/merge-two-binary-trees/
+https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/description/

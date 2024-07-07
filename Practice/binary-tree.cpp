@@ -4,28 +4,28 @@
 #include<vector>
 using namespace std;
 
-struct Node{
+struct TreeNode{
     int val;
-    Node* left;
-    Node* right;
+    TreeNode* left;
+    TreeNode* right;
 
-    Node(){
+    TreeNode(){
         val = -1;
         left = right = NULL;
     }
 
-    Node(int v){
+    TreeNode(int v){
         val = v;
         left = right = NULL;
     }
 };
 
-void reverseLevelTraversal(Node* root){
-    queue<Node*> q;
-    stack<Node*> s;
+void reverseLevelTraversal(TreeNode* root){
+    queue<TreeNode*> q;
+    stack<TreeNode*> s;
     q.push(root);
     q.push(NULL);
-    Node* tmp = NULL;
+    TreeNode* tmp = NULL;
     while(!q.empty()){
         tmp = q.front();
         q.pop();
@@ -59,12 +59,12 @@ void reverseLevelTraversal(Node* root){
     }
 }
 
-void levelOrderTraversal(Node* root){
+void levelOrderTraversal(TreeNode* root){
     if(root == NULL) return;
-    queue<Node*> q;
+    queue<TreeNode*> q;
     q.push(root);
     q.push(NULL);
-    Node* tmp = NULL;
+    TreeNode* tmp = NULL;
     while(!q.empty()){
         tmp = q.front();
         q.pop();
@@ -113,28 +113,28 @@ void levelOrderTraversal(Node* root){
 
 }
 
-Node* buildTree(){
-    Node* root = new Node();
+TreeNode* buildTree(){
+    TreeNode* root = new TreeNode();
     root->val = 1;
-    root->left = new Node(2);
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
+    root->left = new TreeNode(2);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
 
-    root->right = new Node(3);
-    root->right->left = new Node(6);
-    root->right->right = new Node(7);
+    root->right = new TreeNode(3);
+    root->right->left = new TreeNode(6);
+    root->right->right = new TreeNode(7);
 
     return root;
 }
 
-void getLevelWithVector(Node* root){
+void getLevelWithVector(TreeNode* root){
     if(root==NULL){
         return;
     }
-    vector<vector<Node*>> v;
+    vector<vector<TreeNode*>> v;
     v.push_back({root});
     int level = 0;
-    vector<Node*> cur = v[0];
+    vector<TreeNode*> cur = v[0];
     while(cur.size()>0){
         level++;
         v.push_back({});
@@ -167,7 +167,7 @@ void getLevelWithVector(Node* root){
 }
 
 int main(){
-    Node* root = buildTree();
+    TreeNode* root = buildTree();
     cout<<"Level-order traversal: \n";
     //getLevelWithVector(root);
     /*levelOrderTraversal(root);

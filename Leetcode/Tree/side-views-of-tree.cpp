@@ -170,7 +170,6 @@ public:
 int main(){
 
     Solution s;
-    //[1,2,2,3,4,4,3,11,null,5,null,null,5]
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);

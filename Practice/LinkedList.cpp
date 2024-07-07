@@ -7,49 +7,49 @@ Linked list : Linear data structure, pointing to next node of the list or NULL.
 Each node atleast contains : a value and address of next node(pointer).
 */
 
-class Node{
+class TreeNode{
     public:
     int val;
-    Node* next;
+    TreeNode* next;
 
-    Node(){
+    TreeNode(){
         this->val = 0;
         this->next = NULL;
     }
 
-    Node(int val){
+    TreeNode(int val){
         this->val = val;
         this->next = NULL;
     }
 };
 
-void insertAtHead(Node* &node, int n){
-    Node* tmp = new Node(n);
+void insertAtHead(TreeNode* &node, int n){
+    TreeNode* tmp = new TreeNode(n);
     tmp->next = node;
     node = tmp;
 }
 
-void insertAtEnd(Node* &node, int n) {
+void insertAtEnd(TreeNode* &node, int n) {
     if (node == NULL) {
         insertAtHead(node, n);
         return;
     }
     
-    Node* tmp = new Node(n);
-    Node* curr = node;
+    TreeNode* tmp = new TreeNode(n);
+    TreeNode* curr = node;
     while (curr->next != NULL) {
         curr = curr->next;
     }
     curr->next = tmp;
 }
 
-void insertAtPosition(Node* &node, int val, int position){
+void insertAtPosition(TreeNode* &node, int val, int position){
     if(position==1){
         insertAtHead(node, val);
         return ;
     }
 
-    Node *prev=NULL, *curr=node;
+    TreeNode *prev=NULL, *curr=node;
     int i=1;
     while(curr!=NULL && i<position){
         prev=curr;
@@ -66,12 +66,12 @@ void insertAtPosition(Node* &node, int val, int position){
         cout<<"Wrong position requested, linked-list is not of the expected size.\n";
         return;
     }
-    prev->next=new Node(val);
+    prev->next=new TreeNode(val);
     prev->next->next=curr;
 }
 
 //Check the function
-void deleteNode(Node* head, int val){
+void deleteNode(TreeNode* head, int val){
     // If the list is empty or contains only one element
     if (head == NULL || head->next == NULL) {
         delete head;
@@ -80,10 +80,10 @@ void deleteNode(Node* head, int val){
  
     /* Delete the head */
     if (head != NULL && head->val==val) {
-        Node* temp = head->next;
+        TreeNode* temp = head->next;
     } else {
-        Node* prev = head;
-        Node* current = head->next;
+        TreeNode* prev = head;
+        TreeNode* current = head->next;
         while (current != NULL) {
             if (current->val==val) {
                 prev->next = current->next;
@@ -97,10 +97,10 @@ void deleteNode(Node* head, int val){
 }
 
 //Reverse the linkedlist
-void reverseLinkedList(Node* node){
-    Node *prev = NULL;
-    Node *curr = node;
-    Node *next = curr->next;
+void reverseLinkedList(TreeNode* node){
+    TreeNode *prev = NULL;
+    TreeNode *curr = node;
+    TreeNode *next = curr->next;
     
     curr->next = prev;
     
@@ -114,8 +114,8 @@ void reverseLinkedList(Node* node){
    node=curr;
 }
 
-void printLinkedList(Node* node) { 
-    Node* temp = node;
+void printLinkedList(TreeNode* node) { 
+    TreeNode* temp = node;
     while(temp){
         cout<<temp->val<<" ";
         temp = temp->next;
@@ -124,9 +124,9 @@ void printLinkedList(Node* node) {
 }    
 
 int main(){
-    Node* n1 = new Node(10);
-    Node* n2 = new Node(5);
-    Node* n3 = new Node(7);
+    TreeNode* n1 = new TreeNode(10);
+    TreeNode* n2 = new TreeNode(5);
+    TreeNode* n3 = new TreeNode(7);
 
     n2->next = n3;
     n1->next = n2;

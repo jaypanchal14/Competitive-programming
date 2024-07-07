@@ -13,13 +13,13 @@ Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]
 */
 
 // Definition for a Node.
-class Node {
+class TreeNode {
 public:
     int val;
-    Node* next;
-    Node* random;
+    TreeNode* next;
+    TreeNode* random;
     
-    Node(int _val) {
+    TreeNode(int _val) {
         val = _val;
         next = NULL;
         random = NULL;
@@ -29,17 +29,17 @@ public:
 class Solution {
 public:
 
-    Node* copyRandomList(Node* head) {
+    TreeNode* copyRandomList(TreeNode* head) {
         if (!head) return head;
-        Node* tmp = head;
+        TreeNode* tmp = head;
         while(tmp){
-            Node* n = new Node(tmp->val);
+            TreeNode* n = new TreeNode(tmp->val);
             n->next = tmp->next;
             tmp->next = n;
             tmp = n->next;
         }
         tmp = head;
-        Node* newHead = head->next;
+        TreeNode* newHead = head->next;
         while(tmp){
             if(tmp->random){
                 tmp->next->random = tmp->random->next;
@@ -47,7 +47,7 @@ public:
             tmp = tmp->next->next;
         }
         tmp = head;
-        Node* next = NULL;
+        TreeNode* next = NULL;
         while(tmp){
             next = tmp->next->next;
             if(next)
@@ -58,13 +58,13 @@ public:
         return newHead;
     }
 
-    Node* copyRandomListWithMemory(Node* head) {
+    TreeNode* copyRandomListWithMemory(TreeNode* head) {
 
         //To maintain map of old and new node mapping, which will be used for further pointer setting
-        unordered_map<Node*, Node*> m;
-        Node* tmp = head;
+        unordered_map<TreeNode*, TreeNode*> m;
+        TreeNode* tmp = head;
         while(tmp){
-            m[tmp] = new Node(tmp->val);
+            m[tmp] = new TreeNode(tmp->val);
             tmp = tmp->next;
         }
         tmp = head;
