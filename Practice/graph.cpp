@@ -125,7 +125,7 @@ class graph{
                 
                 for(auto next : adj[n]){
                     if(visited[next] == true && next != parent[n]){
-                        cout<<"Parent and child were cycle got detected: "<<n<<" and "<<next<<endl;
+                        cout<<"cycle got detected, Parent and child are : "<<n<<" and "<<next<<endl;
                         return true;
                     }
                     else if(visited[next]==false){
@@ -140,7 +140,7 @@ class graph{
 
         // Detecting cycle with DFS approach (for undirected graph ONLY)
         bool checkCycleWithDFSUndirected(int root, unordered_map<int, bool> &visited){
-            if(root < 0 && root >= nodes){
+            if(root < 0 || root >= nodes){
                 cout<<"Source : "<<root<< " not found in the graph"<<endl;
                 return false;
             }
@@ -157,11 +157,12 @@ class graph{
                 }
                 visited[n] = true;
                 for(auto next : adj[n]) {
-
-                    if(next != parent[n]){
+                    if(visited[next]==false){
                         s.push(next);
                         parent[next] = n;
-                        
+                    }else if(next != parent[n]){
+                        cout << "Cycle detected at nodes: " << n << " and " << next << endl;
+                        return true;
                     }
                     
                 }
@@ -169,27 +170,114 @@ class graph{
             return false;
         }
 
+        //Using DFS
         bool checkCycleForDirected(int root, unordered_map<int, bool> &visited, vector<bool> &callMade){
             
-            stack<int> s;
-            s.push(root);
-            
-            while(!s.empty()){
-                int n = s.top();   s.pop();
-                visited[n] = true;
-                callMade[n] = true;
-                
-                for(int next : adj[n]){
-                    if(visited[next]==false){
-                        s.push(next);
-                    }
-                    else if(callMade[next]){
-                        cout<<"Cycle got detected at node: "<<n<<endl;
+            callMade[root] = true;
+            visited[root] = true;
+            for(int& next : adj[root]){
+                if(visited[next] == false){
+                    if(checkCycleForDirected(next, visited, callMade)){
                         return true;
                     }
                 }
+                if(callMade[next]){
+                    return true;
+                }
             }
+            callMade[root] = false;
             return false;
+        }
+
+        // Using BFS
+        bool checkCycleForDirectedUsingBFS(){
+            int count = 0, node;
+            vector<int> inDegree(nodes, 0);
+            for(int i=0; i<nodes; i++){
+                for(auto& next : adj[i]){
+                    inDegree[next]++;
+                }
+            }
+            queue<int> q;
+            for(int i=0; i<nodes; i++){
+                if(inDegree[i] == 0){
+                    q.push(i);
+                }
+            }
+            while(!q.empty()){
+                node = q.front();
+                q.pop();
+                count++;
+                for(auto& next : adj[node]){
+                    inDegree[next]--;
+                    if(inDegree[next] == 0){
+                        q.push(next);
+                    }
+                }
+            }
+            //Conclusion : in case of cycle in directed graph, topological order will be wrong or incomplete
+            return count!=nodes;
+        }
+
+        //Only for DAG
+        void topologicalSort(){
+
+            //(1)Below is recursive DFS approach
+            /*stack<int> st;
+            unordered_map<int, bool> visited;
+            for(int i=0; i<nodes; i++){
+                if(!visited[i]){
+                    topologicalUtil(i, st, visited);
+                }
+            }
+            while(!st.empty()){
+                cout<<st.top()<<" ";
+                st.pop();
+            }
+            cout<<endl;
+            */
+
+           //(2) Kahn's algorithm with BFS
+            vector<int> inDegree(nodes, 0);
+            vector<int> ans;
+            for(int i=0; i<nodes; i++){
+                for(int& next : adj[i]){
+                    inDegree[next]++;
+                }
+            }
+            queue<int> q;
+            for(int i=0; i<nodes; i++){
+                if(inDegree[i]==0){
+                    q.push(i);
+                }
+            }
+            int node;
+            while(!q.empty()){
+                node = q.front();
+                q.pop();
+                ans.push_back(node);
+                for(int& next : adj[node]){
+                    //Removing the edges at a time of node having 0 inDegree
+                    if(--inDegree[next]==0){
+                        q.push(next);
+                    }
+                }
+            }
+            cout<<"Your topological sort is: ";
+            for(int& ele : ans){
+                cout<<ele<<" ";
+            }
+            cout<<endl;
+        }
+
+        void topologicalUtil(int i, stack<int>& st, unordered_map<int, bool>& visited){
+            visited[i] = true;
+            for(int& next : adj[i]){
+                if(!visited[next]){
+                    topologicalUtil(next, st, visited);
+                }
+            }
+            st.push(i);
         }
 };
 
@@ -200,15 +288,16 @@ int main(){
     g.nodes = nodes;
     g.addEdge(0, 1, 1);
     g.addEdge(1, 2, 1);
-    g.addEdge(2, 3, 1);
-    g.addEdge(2, 4, 1);
-    g.addEdge(4, 3, 1);
-    g.addEdge(1, 5, 1);
-    g.addEdge(5, 6, 1);
-    g.addEdge(6, 7, 1);
-    g.addEdge(7, 5, 1);
+    g.addEdge(1, 3, 1);
+    g.addEdge(3, 4, 1);
+    //g.addEdge(4, 5, 1);
+    g.addEdge(5, 3, 1);
+    g.addEdge(2, 6, 1);
+    g.addEdge(2, 7, 1);
+    g.addEdge(7, 6, 1);
 
     g.printAllEdges();
+    /*
     bool cyclePresent = false;
     unordered_map<int, bool> visited;
     vector<bool> callMade(nodes, false);
@@ -221,23 +310,41 @@ int main(){
         }
     }
     cout<<"Cycle present with DFS(1 - present / 0 - absent): "<<cyclePresent<<endl;
+    */
+    //Print the graph's topological sorted order
+    g.topologicalSort();
+    cout<<"Cycle present with BFS for directed: "<<g.checkCycleForDirectedUsingBFS()<<endl;
+    
     return 0;
 }
 
 //Use below for trying by own
 int main1(){
-    int n,m;
+
+    graph g;
+    /*int n,m;
     cout<<"Enter number of nodes: ";
     cin>>n;
     cout<<"Enter number of edges: ";
     cin>>m;
-    graph g;
     g.nodes = n;
     for(int i=0; i<m; i++){
         int u,v;
         cin>>u>>v;
         g.addEdge(u, v, 0);
-    }
+    }*/
+
+    int n = 8;
+    g.nodes = n;
+    g.addEdge(0, 1, 0);
+    g.addEdge(1, 2, 0);
+    g.addEdge(1, 3, 0);
+    g.addEdge(3, 4, 0);
+    g.addEdge(4, 5, 0);
+    g.addEdge(5, 3, 0);
+    g.addEdge(2, 6, 0);
+    g.addEdge(2, 7, 0);
+    g.addEdge(7, 6, 0);
 
     g.printAllEdges();
 

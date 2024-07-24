@@ -4,10 +4,23 @@ White solving such question, consider below key-points :
 - Try using xor operation
 - Try figuring out if mask can help, to distinguish between following pattern or non-following pattern.
 
+# Graph
+- Try using BFS or DFS.
+- Check if the distance between nodes can be considered a fact in solving the issue or not.
+- For getting shortest path between source and destination : 
+    (1) Dijkstra : for one source and any destination, only constraint is no negative edge should be there in the graph.
+    (2) Bellman-ford : for one source and any destination on directed graph, can detect negative edge cycle.
+    (3) Floyd-warshall : For getting minimum distance between all the nodes.
+- For finding minimum spanning tree, you can use Prim's or Kruskal's algo.
+- For finding topological sort, you can use Kahn's algo (BFS with zero in-degree nodes).
+- To find the strongly connected components, use Kosaraju's algo.
+- To find the bridge in the graph, you can use Tarjan' algo(maintaining discovery and lowert time array).
+
 # Greedy
 The first think which should come to your mind is, lets grab what is most relevant to the situation.
 Sorting will definitely help. For optimization, you can check if some condition is being held true for some item/user/val,
-whether it will held true for neighbours of left or right side. 
+whether it will held true for neighbours of left or right side.
+- Check wether any data-structure will help in the case or not, like monotonic-stack or deque.
 
 # Linked-list
 - Try to use recusion, consider the prev, current, next possible nodes.
@@ -21,11 +34,15 @@ whether it will held true for neighbours of left or right side.
 # Stack
 - Considering traversing in either direction, recursion might help(stack pop and push with backtracking)
 
+# Topological order
+- Whenever in the problem, if they mention that order is important between nodes, you can try using the idea of topological sort.
+
 # Tree
 - Try considering the situation of the given question based on different traversal methods.
 - Level-order with queue, vertical-order with column and queue
 - For space-optimized questions, morris traversal might help
 - In case of problem around Binary-search tree, try using login incorporated with in-order traversal.
+
 
 https://leetcode.com/problems/maximum-binary-tree/description/
 https://leetcode.com/problems/maximum-binary-tree-ii/description/
