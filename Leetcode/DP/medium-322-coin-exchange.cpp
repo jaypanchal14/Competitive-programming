@@ -11,19 +11,30 @@ Output: 3
 */
 
 int main(){
-    vector<int> coins = {2,3,5,6};
-    int amount = 7;
+    vector<int> coins = {3,4,5};
+    int amount = 11;
     int s = coins.size();
     vector<int> dp(amount+1, INT_MAX);
     dp[0] = 0;
-    for(int i = 0; i < s; i++){
+    /*for(int i = 0; i < s; i++){
         for(int j = 1; j<amount+1; j++){
             if( coins[i] <=j && dp[j-coins[i]]!=INT_MAX && dp[j] > 1 + dp[j-coins[i]]){
                 dp[j] = 1 + dp[j-coins[i]];
             }
         }
         
+    }*/
+
+    
+    for(int i=1; i<=amount; i++){
+        for(auto& c : coins){
+            if(i>=c && dp[i-c]!=INT_MAX){
+                dp[i] = min(dp[i], 1+dp[i-c]);
+            }
+        }
     }
+    
+
     if(dp[amount]!=INT_MAX){
         cout<<"Answer is: "<<dp[amount];
     }else{

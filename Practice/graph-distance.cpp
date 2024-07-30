@@ -126,6 +126,62 @@ void dijkstraDistance(vector<vector<int> >& edges, int s, int vertices){
     cout<<endl;
 }
 
+//Can work with negative edges as well, T.C : O(V*E);
+void bellmanFordDistance(vector<vector<int> >& edges, int s, int vertices){
+    vector<int> dist(vertices, INT_MAX);
+    dist[s] = 0;
+    for(int i=1; i<vertices; i++){
+        for(auto& e : edges){
+            if(dist[e[0]]!=INT_MAX && dist[e[1]] > dist[e[0]] + e[2]){
+                dist[e[1]] = dist[e[0]] + e[2];
+            }
+        }
+    }
+    //Check whether there is negative edge cycle or not
+    bool flag = false;
+    for(auto& e : edges){
+        if(dist[e[0]]!=INT_MAX && dist[e[1]] > dist[e[0]] + e[2]){
+            flag = true;
+            break;
+        }
+    }
+    if(flag){
+        cout<<"There is a negative edge cycle present in the graph. \n";
+    }
+    for(auto& ele : dist){
+        cout<<ele<<" ";
+    }    
+    cout<<endl;
+}
+
+void floydWarshalDistance(vector<vector<int> >& edges, int v){
+    vector<vector<int>> dist(v, vector<int>(v, INT_MAX));
+    for(int i=0; i<v; i++){
+        dist[i][i] = 0;
+    }
+    for(auto& e : edges){
+        dist[e[0]][e[1]] = e[2];
+        //dist[e[1]][e[0]] = e[2];
+    }
+    for(int k=0; k<v; k++){
+        for(int i=0; i<v; i++){
+            for(int j=0; j<v; j++){
+                //Relax using kth node at a time
+                if(dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][j] > dist[i][k] + dist[k][j]){
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+    cout<<"Distance between all the nodes are:\n";
+    for(auto& r : dist){
+        for(auto& x : r){
+            cout<<x<<" ";
+        }
+        cout<<endl;
+    }
+}
+
 int main(){
     int v = 8;
     int s = 0, d = 6;
@@ -141,7 +197,10 @@ int main(){
 
     //printShortestDistanceDirected(edges, s, d, v);
 
-    dijkstraDistance(edges, s, v);
+    //dijkstraDistance(edges, s, v);
+    //bellmanFordDistance(edges, s, v);
+    
+    floydWarshalDistance(edges, v);
 
     return 0;
 }

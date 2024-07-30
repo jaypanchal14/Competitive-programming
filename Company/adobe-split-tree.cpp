@@ -20,46 +20,6 @@ Output: 2
 
 */
 
-/* From correct submissions
-class Solution
-{
-    
-    
-    public:
-    
-    long long ans=LLONG_MAX;
-    long long total;
-    
-    long long solve(int node,int par,vector<vector<int>> &adj,vector<long long> &values){
-        values[node]+=node;
-        for(auto child:adj[node]){
-            if(child!=par){
-                values[node]+=solve(child,node,adj,values);
-                
-                ans=min(ans,abs(total - 2*values[child]));
-            }
-        }
-        return values[node];
-    }
-    long long MinDiff(int n, int A[], int B[])
-    {
-        long long m = n;
-        total= (m*(m+1))/2;
-        vector<vector<int>> adj(n+1);
-        vector<long long> values(n+1,0);
-        for(int i=0; i<n-1; i++){
-            adj[A[i]].push_back(B[i]);
-            adj[B[i]].push_back(A[i]);
-        }
-        solve(1,0,adj,values);
-        return ans;
-    }
-};
-
-
-*/
-
-
 class Solution{
 public:
 
@@ -81,18 +41,15 @@ public:
     }
 
     int dfs(int i, int parent, int& total, vector<vector<int>>& adj, vector<int>& sum, int& ans){
-        if(sum[i]!=0){
-            return sum[i];
-        }
-        int s = i;
+        sum[i] = i;
         for(auto& next : adj[i]){
             if(next!=parent){
-                s += dfs(next, i, total, adj, sum, ans);
+                sum[i] += dfs(next, i, total, adj, sum, ans);
+                ans = min(ans, abs(total - 2*sum[next]));
+
             }
         }
-        sum[i] = s;
-        ans = min(ans, abs(total - 2*s));
-        return s;
+        return sum[i];
     }
 
 };
@@ -100,8 +57,8 @@ public:
 int main(){
 
     int n = 3;
-    //int a[] = {1,1};
-    //int b[] = {2,3};
+    //int a[] = {1,1,1};
+    //int b[] = {2,3,4};
     vector<int> a = {1,1};
     vector<int> b = {2,3};
     Solution s;

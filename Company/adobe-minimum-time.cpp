@@ -31,7 +31,9 @@ class Solution {
             for(int j=i+1;j<=min(i+k,n);j++){
                 mini=min(mini,dp[j]);
             }
-            dp[i]=min(dp[i],search[i]+mini);
+            if(mini!=INT_MAX){
+                dp[i]=min(dp[i],search[i]+mini);
+            }
         }
         return dp[0];
     }

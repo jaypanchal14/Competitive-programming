@@ -4,6 +4,10 @@ White solving such question, consider below key-points :
 - Try using xor operation
 - Try figuring out if mask can help, to distinguish between following pattern or non-following pattern.
 
+# Dynamic programming
+(1) Top to bottom : Recursion + memoization
+(2) Bottom up : Tabulation
+
 # Graph
 - Try using BFS or DFS.
 - Check if the distance between nodes can be considered a fact in solving the issue or not.
@@ -48,3 +52,4 @@ https://leetcode.com/problems/maximum-binary-tree/description/
 https://leetcode.com/problems/maximum-binary-tree-ii/description/
 https://leetcode.com/problems/merge-two-binary-trees/
 https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/description/
+https://leetcode.com/problems/minimum-number-of-increments-on-subarrays-to-form-a-target-array/description/
