@@ -7,6 +7,8 @@ White solving such question, consider below key-points :
 # Dynamic programming
 (1) Top to bottom : Recursion + memoization
 (2) Bottom up : Tabulation
+- Questions following LIS or Russian-doll pattern, sort the vector if rotating is not an issue. 
+  Then do binary search over the values following the constraints. Finding lower or upper bound might help.
 
 # Graph
 - Try using BFS or DFS.
@@ -18,7 +20,7 @@ White solving such question, consider below key-points :
 - For finding minimum spanning tree, you can use Prim's or Kruskal's algo.
 - For finding topological sort, you can use Kahn's algo (BFS with zero in-degree nodes).
 - To find the strongly connected components, use Kosaraju's algo.
-- To find the bridge in the graph, you can use Tarjan' algo(maintaining discovery and lowert time array).
+- To find the bridge in the graph, you can use Tarjan' algo(maintaining discovery and lowest time array).
 
 # Greedy
 The first think which should come to your mind is, lets grab what is most relevant to the situation.
