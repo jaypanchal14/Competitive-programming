@@ -17,8 +17,18 @@ inline int getSum(int a, int b){
 
 int main(){
     
-    cout<<MAC<<", Function from macro:"<<fun(1,2)<<endl;
-    cout<<"Global:"<<globalV<<endl;
-    cout<<getSum(12,23)<<endl;
+    // cout<<MAC<<", Function from macro:"<<fun(1,2)<<endl;
+    // cout<<"Global:"<<globalV<<endl;
+    // cout<<getSum(12,23)<<endl;
+    
+    int a = 264;
+    int* b = &a;
+    cout<<"Address of a:"<<b<<endl;
+    cout<<"Value of a:"<<*b<<endl;
+
+    char* c = (char*)(b);
+    cout<<"Address of a:"<<(void*)c<<endl; //Same address as b
+    cout<<"Value of a:"<<(int)*c<<endl; //prints 8
+
     return 0;
 }

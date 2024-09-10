@@ -7,7 +7,7 @@
 using namespace std;
 
 /*
-Description : Number of operations to needed to balance the strings of parenthesis.
+Description : Number of operations needed to balance the strings of parenthesis.
 */
 
 int get(string str){
