@@ -21,8 +21,6 @@ public:
 
     ListNode* getMid(ListNode* head){
         ListNode* slow = head;
-        // Below is false, and it gives infinite loop if we assign fast as a next of head
-        // ListNode* fast = head;
         ListNode* fast = head->next;
         while(fast && fast->next){
             slow = slow->next;

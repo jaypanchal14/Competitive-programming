@@ -42,9 +42,9 @@ public:
             if(n!=par){
                 tmp = get(n, root, v, ans);
                 child += tmp;
-                if(x==-1 || x == tmp){
+                if(x==-1){
                     x = tmp;
-                }else{
+                }else if(x != tmp){
                     flag = false;
                 }
             }

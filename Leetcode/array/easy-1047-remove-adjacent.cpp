@@ -17,17 +17,16 @@ The result of this move is that the string is "aaca", of which only "aa" is poss
 
 string removeDuplicates(string s) {
     int i = 1;
-    int size = s.size();
-    while(i<size){
-        if(s[i] == s[i-1]){
-            s.erase(i-1,2);
+    while (i>=0 && i < s.size()) {
+        if (i>0 && s[i] == s[i - 1]) {
+            s.erase(i - 1, 2);
             i--;
-        }else{
+        } else {
             i++;
         }
     }
     return s;
-}
+}    
 
 string removeDuplicatesExtraString(string s) {
     int i = 0;

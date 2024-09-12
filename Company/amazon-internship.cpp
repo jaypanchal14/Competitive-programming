@@ -4,7 +4,7 @@
 
 using namespace std;
 
-/*
+/* OA - two questions
 Que-1 : 
 You are given an array of size n, where ith index represents how many parcels ith delivery person currently has.
 You are also given an integer extra_parcels, indicating extra parcels which needs to be delivered.
@@ -88,6 +88,12 @@ int maxMatchLength(const string& text, const string& regex){
         return rf + right.size() - lf;
     }
 }
+
+/*
+Interview : 
+1) Group anagram : Leetcode 49
+2) Closest 3 sum : Leetcode 16
+*/
 
 int main(){
     string text = "abcbc";

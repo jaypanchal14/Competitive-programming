@@ -4,6 +4,7 @@
         "unordered_map": "cpp",
         "queue": "cpp",
         "new": "cpp",
-        "climits": "cpp"
+        "climits": "cpp",
+        "vector": "cpp"
     }
 }
