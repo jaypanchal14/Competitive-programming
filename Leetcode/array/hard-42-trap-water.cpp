@@ -10,6 +10,30 @@ Given n non-negative integers representing an elevation map where the width of e
 
 class Solution {
 public:
+
+    int trapTwoPointers(vector<int>& h) {
+        int ans = 0, l = 0, r = h.size()-1;
+        int lmax = 0, rmax = 0;
+        while(l<=r){
+            if(h[l] <= h[r]){
+                if(lmax < h[l]){
+                    lmax = h[l];
+                }else{
+                    ans += lmax-h[l];
+                    l++;
+                }
+            }else{
+                if(rmax < h[r]){
+                    rmax = h[r];
+                }else{
+                    ans += rmax-h[r];
+                    r--;
+                }
+            }
+        }
+        return ans;
+    }
+
     int trap(vector<int>& h) {
         int ans = 0;
         int s = h.size();

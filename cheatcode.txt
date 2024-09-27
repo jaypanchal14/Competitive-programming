@@ -40,6 +40,10 @@ whether it will held true for neighbours of left or right side.
 # Stack
 - Considering traversing in either direction, recursion might help(stack pop and push with backtracking)
 
+# Sweep line algorithm
+- For checking the intersection between event points, might help in greedily finding the solution after sorting.
+- Keep in check the starting and ending of the event.
+
 # Topological order
 - Whenever in the problem, if they mention that order is important between nodes, you can try using the idea of topological sort.
 
